@@ -62,7 +62,7 @@
     "react-dnd-test-backend": "^2.3.0",
     "react-dom": "^15.5.4 || ^16.0.0",
     "react-test-renderer": "^15.5.4 || ^16.0.0",
-    "sinon": "^3.0.0",
+    "sinon": "^4.1.4",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.4.2"
   }
