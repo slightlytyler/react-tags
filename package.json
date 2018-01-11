@@ -64,6 +64,6 @@
     "react-test-renderer": "^15.5.4 || ^16.0.0",
     "sinon": "^3.0.0",
     "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dev-server": "^2.10.1"
   }
 }
