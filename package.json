@@ -1,6 +1,7 @@
 {
-  "name": "react-tag-input",
-  "version": "4.7.1",
+  "name": "@slightlytyler/react-tag-input",
+  "private": false,
+  "version": "4.8.0",
   "description": "React tags is a fantastically simple tagging component for your React projects",
   "main": "dist-modules/ReactTags.js",
   "scripts": {
@@ -10,7 +11,8 @@
     "dev": "webpack-dev-server --config webpack-dev-server.config.js --progress --inline --colors",
     "format": "prettier  --write --jsx-bracket-same-line --trailing-comma es5 lib/*.js test/*.js",
     "build": "webpack --config webpack-production.config.js --progress --colors && babel lib --out-dir dist-modules",
-    "start": "npm-run-all --parallel open-localhost dev"
+    "start": "npm-run-all --parallel open-localhost dev",
+    "prepublish": "yarn build"
   },
   "keywords": [
     "react",
