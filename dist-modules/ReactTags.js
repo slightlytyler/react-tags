@@ -82,6 +82,7 @@ var ReactTags = function (_Component) {
     _this.moveTag = _this.moveTag.bind(_this);
     _this.handlePaste = _this.handlePaste.bind(_this);
     _this.resetAndFocusInput = _this.resetAndFocusInput.bind(_this);
+    _this.handleSubmitManually = _this.handleSubmitManually.bind(_this);
     _this.handleSuggestionHover = _this.handleSuggestionHover.bind(_this);
     _this.handleSuggestionClick = _this.handleSuggestionClick.bind(_this);
     return _this;
@@ -97,19 +98,19 @@ var ReactTags = function (_Component) {
   }, {
     key: "resetAndFocusInput",
     value: function resetAndFocusInput() {
+      this.textInput.value = "";
+      this.textInput.focus();
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
       var _props = this.props,
           autofocus = _props.autofocus,
           readOnly = _props.readOnly;
 
       if (autofocus && !readOnly) {
-        this.textInput.value = "";
-        this.textInput.focus();
+        this.resetAndFocusInput();
       }
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.resetAndFocusInput();
     }
   }, {
     key: "filteredSuggestions",
@@ -285,6 +286,15 @@ var ReactTags = function (_Component) {
       this.resetAndFocusInput();
     }
   }, {
+    key: "handleSubmitManually",
+    value: function handleSubmitManually() {
+      var query = this.state.query;
+
+      if (query) {
+        this.addTag(this.state.query);
+      }
+    }
+  }, {
     key: "handleSuggestionClick",
     value: function handleSuggestionClick(i, e) {
       this.addTag(this.state.suggestions[i]);
@@ -356,7 +366,8 @@ var ReactTags = function (_Component) {
           onPaste: this.handlePaste,
           name: inputName,
           id: inputId,
-          maxLength: maxLength
+          maxLength: maxLength,
+          value: this.props.inputValue
         }),
         _react2.default.createElement(_Suggestions2.default, {
           query: query,
@@ -369,7 +380,12 @@ var ReactTags = function (_Component) {
           classNames: this.state.classNames
         })
       ) : null;
-
+      var SubmitComponent = this.props.submitComponent;
+      var submitButton = SubmitComponent ? _react2.default.createElement(SubmitComponent, {
+        className: "ReactTags__submit",
+        disabled: this.state.query === '',
+        onClick: this.handleSubmitManually
+      }) : null;
       return _react2.default.createElement(
         "div",
         { className: this.state.classNames.tags },
@@ -377,9 +393,11 @@ var ReactTags = function (_Component) {
           "div",
           { className: this.state.classNames.selected },
           tagItems,
-          this.props.inline && tagInput
+          this.props.inline && tagInput,
+          this.props.inline && submitButton
         ),
-        !this.props.inline && tagInput
+        !this.props.inline && tagInput,
+        !this.props.inline && submitButton
       );
     }
   }]);
@@ -387,7 +405,7 @@ var ReactTags = function (_Component) {
   return ReactTags;
 }(_react.Component);
 
-ReactTags.PropTypes = {
+ReactTags.propTypes = {
   placeholder: _propTypes2.default.string,
   labelField: _propTypes2.default.string,
   suggestions: _propTypes2.default.array,
@@ -409,7 +427,8 @@ ReactTags.PropTypes = {
   classNames: _propTypes2.default.object,
   name: _propTypes2.default.string,
   id: _propTypes2.default.string,
-  maxLength: _propTypes2.default.string
+  maxLength: _propTypes2.default.string,
+  inputValue: _propTypes2.default.string
 };
 
 ReactTags.defaultProps = {
